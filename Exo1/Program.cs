@@ -38,15 +38,15 @@ namespace Exo1
             retour = cmd.ExecuteNonQuery();
             if (retour == 1) Console.WriteLine("Article Souris inséré");
              
-            // EXEC Stock_Insert '89146476-06E9-4D39-9628-D30CC9136B11', 200 
+            // EXEC Stock_Insert '...............', 200 
             cmd.Parameters.Clear();
             cmd.CommandText = "Stock_Insert";
             cmd.Parameters.Add(new SqlParameter("article", idArticle1));
             cmd.Parameters.Add(new SqlParameter("qte", 200));
             retour = cmd.ExecuteNonQuery();
-            if (retour == 1) Console.WriteLine("Stock Article quantité 200 inséré");
+            if (retour == 1) Console.WriteLine("Stock 200 Claviers inséré");
 
-            // Exec Article_Delete '1DBBDF4B-5B59-4EA7-A69D-84F7F62E0B26'
+            // Exec Article_Delete '...........'
             cmd.Parameters.Clear();
             cmd.CommandText = "Article_Delete";
             cmd.Parameters.Add(new SqlParameter("id", idArticle2));
