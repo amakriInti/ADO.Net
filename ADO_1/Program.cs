@@ -6,7 +6,7 @@ namespace ADO_1
 {
     class Personne
     {
-        private static void Main(string[] args) { }
+        //private static void Main(string[] args) { }
 
     }
     enum TypeRequete { Select, Insert, Update, Delete, Scalar }

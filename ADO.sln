@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exo1_Ameliore", "Exo1_Ameli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heritage", "Heritage\Heritage.csproj", "{4423AF32-AEB3-4B2C-9D3E-94048FAEB9EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exo1_Ameliore.DataLayer", "Exo1_Ameliore.DataLayer\Exo1_Ameliore.DataLayer.csproj", "{2C811B1B-2E35-4866-98C9-89961994F22C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4423AF32-AEB3-4B2C-9D3E-94048FAEB9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4423AF32-AEB3-4B2C-9D3E-94048FAEB9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4423AF32-AEB3-4B2C-9D3E-94048FAEB9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C811B1B-2E35-4866-98C9-89961994F22C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C811B1B-2E35-4866-98C9-89961994F22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C811B1B-2E35-4866-98C9-89961994F22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C811B1B-2E35-4866-98C9-89961994F22C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
