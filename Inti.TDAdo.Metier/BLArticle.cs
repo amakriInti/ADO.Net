@@ -14,5 +14,14 @@ namespace Inti.TDAdo.Metier
         {
             return Repository.GetArticles();
         }
+        public static ArrayList GetStocks()
+        {
+            return Repository.GetStocks();
+        }
+
+        public static bool InsertArticle(string nom, decimal prix)
+        {
+            return Repository.InsertArticle(nom, prix);
+        }
     }
 }

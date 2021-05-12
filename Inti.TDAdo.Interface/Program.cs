@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Inti.TDAdo.Interface
 {
+    enum Langue { FR, EN} 
     class Program
     {
         static void Main(string[] args)
@@ -45,6 +46,23 @@ namespace Inti.TDAdo.Interface
             }
 
         }
+        private static string Saisir()
+        {
+            while (true)
+            {
+                var s = Console.ReadLine();
+                if (!string.IsNullOrEmpty(s)) return s;
+            }
+        }
+        private static decimal Saisir(Langue langue)
+        {
+            while (true) 
+            {
+                var s = Console.ReadLine().Replace(".",",");
+                if (decimal.TryParse(s, out decimal i)) return i;
+            }
+        }
+
         private static void ArticleAffiche()
         {
             var liste = BLArticle.GetArticles();
@@ -53,6 +71,24 @@ namespace Inti.TDAdo.Interface
                 Console.WriteLine("{0} {1}\t{2}", liste[i], liste[i + 1], liste[i + 2]);
             }
         }
+        private static void StockAffiche()
+        {
+            var liste = BLArticle.GetStocks();
+            for (int i = 0; i < liste.Count; i += 3)
+            {
+                Console.WriteLine("{0} {1}\t{2}", liste[i], liste[i + 1], liste[i + 2]);
+            }
+        }
+        private static void ArticleAjout()
+        {
+            Console.Write("Nom de l'article : ");
+            string nom = Saisir();
+            Console.Write("Prix de l'article : ");
+            decimal prix = Saisir(Langue.FR);
+            bool ok = BLArticle.InsertArticle(nom, prix);
+            if (ok) Console.WriteLine("Article ajouté"); else Console.WriteLine("Article pas ajouté");
+        }
+
 
         private static void StockTotal()
         {
@@ -63,17 +99,6 @@ namespace Inti.TDAdo.Interface
         {
             throw new NotImplementedException();
         }
-
-        private static void ArticleAjout()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void StockAffiche()
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
 }
