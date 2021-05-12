@@ -5,10 +5,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6B132B21-AA0C-4F5A-A65F-C82045187384}</ProjectGuid>
+    <ProjectGuid>{3834F21D-0315-4985-BD11-5C1F8D91AECA}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Exo2_EF</RootNamespace>
-    <AssemblyName>Exo2_EF</AssemblyName>
+    <RootNamespace>DemoEFAvecPS</RootNamespace>
+    <AssemblyName>DemoEFAvecPS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Article.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Article_Read_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
