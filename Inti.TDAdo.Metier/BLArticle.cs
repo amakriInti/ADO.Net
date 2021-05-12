@@ -23,5 +23,10 @@ namespace Inti.TDAdo.Metier
         {
             return Repository.InsertArticle(nom, prix);
         }
+
+        public static bool InsertStock(Guid id, int qte)
+        {
+            return Repository.InsertStock(id, qte);
+        }
     }
 }

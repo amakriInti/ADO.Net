@@ -44,7 +44,17 @@ namespace Inti.TDAdo.Interface
                 var s = Console.ReadLine();
                 if (int.TryParse(s, out int i) && i >= min && i <= max) return i;
             }
-
+        }
+        private static Guid SaisirArticle()
+        {
+            var liste = BLArticle.GetArticles(); var n = 1;
+            for (int i = 0; i < liste.Count; i += 3)
+            {
+                Console.WriteLine("{0}. {1}", n, liste[i + 1]);
+                n++;
+            }
+            n = Saisir(1, n-1);
+            return (Guid) liste[3 * (n - 1)];
         }
         private static string Saisir()
         {
@@ -86,19 +96,20 @@ namespace Inti.TDAdo.Interface
             Console.Write("Prix de l'article : ");
             decimal prix = Saisir(Langue.FR);
             bool ok = BLArticle.InsertArticle(nom, prix);
-            if (ok) Console.WriteLine("Article ajouté"); else Console.WriteLine("Article pas ajouté");
+            if (ok) Console.WriteLine("Article ajouté"); else Console.WriteLine("Ajoût non effectué");
         }
-
-
-        private static void StockTotal()
-        {
-            throw new NotImplementedException();
-        }
-
         private static void StockAjout()
         {
-            throw new NotImplementedException();
+            Console.Write("Article : ");
+            Guid id = SaisirArticle();
+            Console.Write("Quantité : ");
+            int qte = Saisir(1, int.MaxValue);
+            bool ok = BLArticle.InsertStock(id, qte);
+            if (ok) Console.WriteLine("Stock mis à jour"); else Console.WriteLine("Ajoût non effectué");
         }
-
+        private static void StockTotal()
+        {
+           
+        }
     }
 }
