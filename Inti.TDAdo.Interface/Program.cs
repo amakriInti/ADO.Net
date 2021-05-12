@@ -12,6 +12,8 @@ namespace Inti.TDAdo.Interface
     {
         static void Main(string[] args)
         {
+            BLArticle.Init();
+
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -109,7 +111,8 @@ namespace Inti.TDAdo.Interface
         }
         private static void StockTotal()
         {
-           
+            int n = BLArticle.GetStockTotal();
+            Console.WriteLine("{0} article{1} dans le stock", n, n > 1 ? "s": "");
         }
     }
 }

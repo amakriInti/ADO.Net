@@ -8,15 +8,22 @@ using System.Threading.Tasks;
 
 namespace Inti.TDAdo.Metier
 {
-    public class BLArticle
+    public static class BLArticle
     {
+        private static ArrayList LesArticles = new ArrayList();
+        private static ArrayList LesStocks = new ArrayList();
+        public static void Init()
+        {
+            LesArticles = Repository.GetArticles();
+            LesStocks = Repository.GetStocks();
+        }
         public static ArrayList GetArticles()
         {
-            return Repository.GetArticles();
+            return LesArticles;
         }
         public static ArrayList GetStocks()
         {
-            return Repository.GetStocks();
+            return LesStocks;
         }
 
         public static bool InsertArticle(string nom, decimal prix)
@@ -27,6 +34,16 @@ namespace Inti.TDAdo.Metier
         public static bool InsertStock(Guid id, int qte)
         {
             return Repository.InsertStock(id, qte);
+        }
+
+        public static int GetStockTotal()
+        {
+            int total = 0;
+            for(int i=0; i < LesStocks.Count; i += 3)
+            {
+                total += (int)LesStocks[i + 2];
+            }
+            return total;
         }
     }
 }
