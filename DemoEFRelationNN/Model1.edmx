@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MakfiBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Etat" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="Vitesse" Type="tinyint" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Reception" Type="uniqueidentifier" />
+          <Property Name="Gouvernante" Type="uniqueidentifier" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="IdWeb" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'MakfiBD.dbo.HotelEmploye' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="HotelEmploye">
+          <Key>
+            <PropertyRef Name="Hotel" />
+            <PropertyRef Name="Employe" />
+          </Key>
+          <Property Name="Hotel" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Employe" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_HotelEmploye_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="HotelEmploye" Type="Self.HotelEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelEmploye">
+              <PropertyRef Name="Employe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelEmploye_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="HotelEmploye" Type="Self.HotelEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelEmploye">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MakfiBDModelStoreContainer">
+          <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelEmploye" EntityType="Self.HotelEmploye" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HotelEmploye].[Hotel] AS [Hotel], 
+    [HotelEmploye].[Employe] AS [Employe]
+    FROM [dbo].[HotelEmploye] AS [HotelEmploye]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_HotelEmploye_Employe" Association="Self.FK_HotelEmploye_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="HotelEmploye" EntitySet="HotelEmploye" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelEmploye_Hotel" Association="Self.FK_HotelEmploye_Hotel">
+            <End Role="Hotel" EntitySet="Hotel" />
+            <End Role="HotelEmploye" EntitySet="HotelEmploye" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MakfiBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Etat" Type="Guid" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vitesse" Type="Byte" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Hotels" Relationship="Self.HotelEmploye" FromRole="Employe" ToRole="Hotel" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Reception" Type="Guid" />
+          <Property Name="Gouvernante" Type="Guid" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdWeb" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employes" Relationship="Self.HotelEmploye" FromRole="Hotel" ToRole="Employe" />
+        </EntityType>
+        <Association Name="HotelEmploye">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MakfiContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employes" EntityType="Self.Employe" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
+          <AssociationSet Name="HotelEmploye" Association="Self.HotelEmploye">
+            <End Role="Employe" EntitySet="Employes" />
+            <End Role="Hotel" EntitySet="Hotels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MakfiBDModelStoreContainer" CdmEntityContainer="MakfiContext">
+          <EntitySetMapping Name="Employes">
+            <EntityTypeMapping TypeName="MakfiBDModel.Employe">
+              <MappingFragment StoreEntitySet="Employe">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="Vitesse" ColumnName="Vitesse" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="MakfiBDModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Reception" ColumnName="Reception" />
+                <ScalarProperty Name="Gouvernante" ColumnName="Gouvernante" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="IdWeb" ColumnName="IdWeb" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="HotelEmploye" TypeName="MakfiBDModel.HotelEmploye" StoreEntitySet="HotelEmploye">
+            <EndProperty Name="Employe">
+              <ScalarProperty Name="Id" ColumnName="Employe" />
+            </EndProperty>
+            <EndProperty Name="Hotel">
+              <ScalarProperty Name="Id" ColumnName="Hotel" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

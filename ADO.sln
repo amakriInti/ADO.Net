@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inti.TDAdo.Winform", "Inti.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inti.TDAdo.Wpf", "Inti.TDAdo.Wpf\Inti.TDAdo.Wpf.csproj", "{1D46C186-E571-4FCF-8A64-E49C073E07B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoEFRelationNN", "DemoEFRelationNN\DemoEFRelationNN.csproj", "{ECB296D9-EF00-42F0-A90D-52DBA60E11C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoEFCodeFirst", "DemoEFCodeFirst\DemoEFCodeFirst.csproj", "{C822C01F-589E-4884-A0D6-B154B45D4F5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{1D46C186-E571-4FCF-8A64-E49C073E07B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D46C186-E571-4FCF-8A64-E49C073E07B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D46C186-E571-4FCF-8A64-E49C073E07B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECB296D9-EF00-42F0-A90D-52DBA60E11C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECB296D9-EF00-42F0-A90D-52DBA60E11C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECB296D9-EF00-42F0-A90D-52DBA60E11C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECB296D9-EF00-42F0-A90D-52DBA60E11C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C822C01F-589E-4884-A0D6-B154B45D4F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C822C01F-589E-4884-A0D6-B154B45D4F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C822C01F-589E-4884-A0D6-B154B45D4F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C822C01F-589E-4884-A0D6-B154B45D4F5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
