@@ -12,6 +12,8 @@ namespace DemoEFCodeFirst
     // https://www.entityframeworktutorial.net/
     class Program
     {
+        Nullable<int> n=null;
+
         static void Main(string[] args)
         {
             var context = new ExoCFContext();
@@ -30,8 +32,10 @@ namespace DemoEFCodeFirst
     class Article
     {
         public Guid Id { get; set; }
+        [Required]
         public string Nom { get; set; }
         public decimal Prix { get; set; }
+        public string Couleur { get; set; }
     }
     class Stock
     {
