@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Exo3CodeFirst
 {
@@ -19,12 +16,15 @@ namespace Exo3CodeFirst
             var rcs = new Equipe(context) { Nom = "Racing Club de Strasbourg", FondTransfert = 30000000 };
             var mBape = new Joueur(context) { Nom = "MBape", Equipe = psg.Id };
             var mBapeBis = new Joueur(context) { Nom = "MBape", Equipe = psg.Id };
-            var tmBape = new Transfert (context) { DateTransfert = DateTime.Now, Joueur = mBape.Id, EquipeVendeur = psg.Id, EquipeAcheteur = rcs.Id, Montant = 3000 };
+            var tmBape = new Transfert(context) { DateTransfert = DateTime.Now, Joueur = mBape.Id, EquipeVendeur = psg.Id, EquipeAcheteur = rcs.Id, Montant = 3000 };
 
             context.Equipes.Add(psg);
             context.Equipes.Add(rcs);
             context.Joueurs.Add(mBape);
-            context.Joueurs.Add(mBapeBis);
+            context.SaveChanges();
+
+            if (context.Joueurs.FirstOrDefault(j => j.Nom == mBapeBis.Nom) == null)
+                context.Joueurs.Add(mBapeBis);
 
             context.Transferts.Add(tmBape);
 
@@ -38,33 +38,29 @@ namespace Exo3CodeFirst
     {
         public SuperLeagueContext() : base("name=SuperLeagueConfig") { }
         public DbSet<Equipe> Equipes { get; set; }
-        public TableJoueur Joueurs { get; set; }
+        public DbSet<Joueur> Joueurs { get; set; }
         public DbSet<Transfert> Transferts { get; set; }
-    }
-    public class TableJoueur : DbSet<Joueur>
-    {
-        public override Joueur Add(Joueur joueur)
-        {
-            if (this.FirstOrDefault(j => j.Nom == joueur.Nom) != null) return null;
-            base.Add(joueur);
-            return joueur;
-        }
     }
     public class Entite
     {
         public Guid Id { get; set; }
-        [NotMapped]
-        protected SuperLeagueContext Context = null;
 
+        public Entite() { }
         public Entite(SuperLeagueContext context)
         {
             Id = Guid.NewGuid();
             Context = context;
         }
+        [NotMapped]
+        protected SuperLeagueContext Context = null;
 
     }
     public class Equipe : Entite
     {
+        public Equipe() : base()
+        {
+
+        }
         public Equipe(SuperLeagueContext context) : base(context)
         {
         }
@@ -74,6 +70,11 @@ namespace Exo3CodeFirst
     }
     public class Joueur : Entite
     {
+        public Joueur() : base()
+        {
+
+        }
+
         public Joueur(SuperLeagueContext context) : base(context)
         {
         }
@@ -84,6 +85,11 @@ namespace Exo3CodeFirst
     }
     public class Transfert : Entite
     {
+        public Transfert() : base()
+        {
+
+        }
+
         public Transfert(SuperLeagueContext context) : base(context)
         {
         }
