@@ -16,51 +16,18 @@ namespace TPAdo.Interface
     enum TypeCommande { Insert}
     class Program
     {
-        //static void Main(string[] args)
-        //{
-        //    // 0. Mode connecté.
-        //    var data = new DataModeDeconnecte();
-        //    // 1. Nouvelle gouvernante affectée à l'hôtel
-        //    data.ModeDeconnecte(TypeCommande.Insert, $"INSERT Utilisateur () values()");
-
-        //    // 2. Nouveau réceptionniste de l'hôtel
-
-        //    // 3. Nouvel Hôtel
-
-        //    // 4. 2 nouvelles chambres 101 102 dans l'hôtel à l'étage 1
-
-        //    // 5. 2 femmes de chambre A et B affectées à l'hôtel
-
-        //    // 6. 1 intervention : A fait la 101 - B fait la 102 
-
-        //    // 7. 
-
-        //    Console.ReadLine();
-        //}
-        //class DataModeDeconnecte
-        //{
-        //    internal void ModeDeconnecte(TypeCommande tCommande, string requete)
-        //    {
-        //        var cnx = new SqlConnection();
-        //        var cmd = new SqlCommand();
-        //        // ...
-        //        switch (tCommande)
-        //        {
-        //            case TypeCommande.Insert: cmd.ExecuteNonQuery(); break;
-        //        }
-        //    }
-        //}
-
         static void Main(string[] args)
         {
             // 0. Mode connecté.
             var repo = new Repository();
 
             // 1. Nouvelle gouvernante affectée à l'hôtel
-            var lopez = repo.NouvelleGouvernante("Lopez");
+            var lopez = repo.NouvelUtilisateur("Lopez", 1);
+            if (lopez == default) { Console.WriteLine("Insertion gouvernante impossible"); return; }
 
             // 2. Nouveau réceptionniste de l'hôtel
-            var henri = repo.NouveauReception("Henri");
+            var henri = repo.NouvelUtilisateur("Henri", 2);
+            if (henri == default) { Console.WriteLine("Insertion réceptionniste impossible"); return; }
 
             // 3. Nouvel Hôtel
             repo.NouvelHotel("Ibis Style", lopez, henri);
@@ -89,11 +56,18 @@ namespace TPAdo.Interface
             Cmd.CommandType = CommandType.Text;
         }
 
-        internal Guid NouvelleGouvernante(string nom)
+        internal Guid NouvelUtilisateur(string nom, int statut)
         {
             var id = Guid.NewGuid();
-            Cmd.CommandText = "Insert...";
-            Cmd.ExecuteNonQuery();
+            Cmd.CommandText = $"Insert into Utilisateur (Id, Nom, CodePin, Statut) values('{id}', '{nom}', '1111', {statut})";
+            try
+            {
+                Cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return default;
+            }
             return id;
         }
     }
