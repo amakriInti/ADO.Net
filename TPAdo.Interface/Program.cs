@@ -56,7 +56,21 @@ namespace TPAdo.Interface
             Cmd.CommandType = CommandType.Text;
         }
 
-        internal Guid NouvelUtilisateur(string nom, int statut)
+        internal Guid NouvelUtilisateur(string nom, string statut)
+        {
+            var id = Guid.NewGuid();
+            Cmd.CommandText = $"Insert into Utilisateur (Id, Nom, CodePin, Statut) values('{id}', '{nom}', '1111', {statut})";
+            try
+            {
+                Cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+            return id;
+        }
+        internal Guid NouvelHotel(string nom, Guid gouv, Guid rec)
         {
             var id = Guid.NewGuid();
             Cmd.CommandText = $"Insert into Utilisateur (Id, Nom, CodePin, Statut) values('{id}', '{nom}', '1111', {statut})";
