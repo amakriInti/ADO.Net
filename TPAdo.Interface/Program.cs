@@ -39,6 +39,8 @@ namespace TPAdo.Interface
             var etage1 = repo.NouvelEtage("Etage 1", hotel1, new List<Guid> { ch1, ch2 });
 
             // 5. 2 femmes de chambre A et B affectées à l'hôtel
+            var emp1 = repo.NouvelEmploye("Philippe", "Lavilliers", hotel1);
+            var emp2 = repo.NouvelEmploye("Georgina", "Dufoix", hotel1);
 
             // 6. 1 intervention : A fait la 101 - B fait la 102 
 
@@ -133,5 +135,23 @@ namespace TPAdo.Interface
                 return default;
             }
         }
+        internal Guid NouvelEmploye(string prenom, string nom, Guid hotel)
+        {
+            var idEtage = Guid.NewGuid();
+            var requete1 = $"insert into GroupeChambre (Id, Nom, Hotel) values('{idEtage}', '{nom}', '{hotel}')";
+            var requete2 = "insert into ChambreGroupeChambre (Chambre, GroupeChambre) values" + string.Join(",", chambres.Select(x => $"('{x}', '{idEtage}')"));
+            try
+            {
+                Cmd.CommandText = $"{requete1};{requete2}";
+                Cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+
+            return idEtage;
+        }
+
     }
 }
