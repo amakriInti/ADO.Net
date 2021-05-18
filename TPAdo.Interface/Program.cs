@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TPAdo.Interface
 {
@@ -13,13 +11,12 @@ namespace TPAdo.Interface
         Employe = 1, Chambre = 2, Intervention = 3, InterventionDetail = 4, Message = 5, InterventionAjouter = 6,
         None = 0
     }
-    enum TypeCommande { Insert }
     class Program
     {
         static void Main(string[] args)
         {
             // 0. Mode connecté.
-            var dal = new Dal();
+            var dal = new Dal_ADO();
 
             // 1. Nouvelle gouvernante affectée à l'hôtel
             var lopez = dal.NouvelUtilisateur("Lopez", 1);
@@ -48,20 +45,25 @@ namespace TPAdo.Interface
             Console.ReadLine();
         }
     }
-    class Dal
+    class Dal_ADO
     {
         private SqlConnection Cnx = new SqlConnection();
         private SqlCommand Cmd = new SqlCommand();
-        public Dal()
+        public Dal_ADO()
         {
-            Cnx.ConnectionString = "";
-            Cnx.Open();
+            Cnx.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=MakfiBD;Integrated Security=True";
+            try
+            {
+                Cnx.Open();
+            }
+            catch(Exception){
 
+            }
             Cmd.Connection = Cnx;
             Cmd.CommandType = CommandType.Text;
         }
 
-        internal Guid NouvelUtilisateur(string nom, int statut)
+        public Guid NouvelUtilisateur(string nom, int statut)
         {
             var id = Guid.NewGuid();
             Cmd.CommandText = $"Insert into Utilisateur (Id, Nom, CodePin, Statut) values('{id}', '{nom}', '1111', {statut})";
@@ -75,7 +77,7 @@ namespace TPAdo.Interface
             }
             return id;
         }
-        internal Guid NouvelHotel(string nom, Guid gouv, Guid rec)
+        public Guid NouvelHotel(string nom, Guid gouv, Guid rec)
         {
             var id = Guid.NewGuid();
             Cmd.CommandText = $"Insert into Hotel (Id, Nom, Gouvernante, Reception) values('{id}', '{nom}', '{gouv}', '{rec}')";
@@ -89,7 +91,7 @@ namespace TPAdo.Interface
             }
             return id;
         }
-        internal Guid NouvelleChambre(string nom, Guid hotel)
+        public Guid NouvelleChambre(string nom, Guid hotel)
         {
             var id = Guid.NewGuid();
             var etat = FindEtat(EntiteEnum.Chambre, "Disponible");
@@ -104,7 +106,7 @@ namespace TPAdo.Interface
             }
             return id;
         }
-        internal Guid NouvelEtage(string nom, Guid hotel, List<Guid> chambres)
+        public Guid NouvelEtage(string nom, Guid hotel, List<Guid> chambres)
         {
             var idEtage = Guid.NewGuid();
             var requete1 = $"insert into GroupeChambre (Id, Nom, Hotel) values('{idEtage}', '{nom}', '{hotel}')";
@@ -134,7 +136,7 @@ namespace TPAdo.Interface
                 return default;
             }
         }
-        internal Guid NouvelEmploye(string prenom, string nom, Guid hotel)
+        public Guid NouvelEmploye(string prenom, string nom, Guid hotel)
         {
             var idEmploye = Guid.NewGuid();
             var etat = FindEtat(EntiteEnum.Employe, "Disponible");
@@ -154,12 +156,12 @@ namespace TPAdo.Interface
             return idEmploye;
         }
 
-        internal object NouvelleIntervention(Guid hotel, List<Guid> listEmp, List<Guid> listCh)
+        public Guid NouvelleIntervention(Guid hotel, List<Guid> listEmp, List<Guid> listCh)
         {
             var idInter = Guid.NewGuid();
             var etatInter = FindEtat(EntiteEnum.Intervention, "Non terminée");
             var etatDetailInter = FindEtat(EntiteEnum.InterventionDetail, "En cours");
-            var requete1 = $"insert into Intervention (Id, Date1, Model, Hotel, Etat) values('{idInter}', {DateTime.Now}, 0, '{hotel}', '{etatInter}')";
+            var requete1 = $"insert into Intervention (Id, Date1, Model, Hotel, Etat) values('{idInter}', '{DateTime.Now}', 0, '{hotel}', '{etatInter}')";
             var requete2 = "insert into InterventionDetail (EmployeAffecte, ChambreAffectee, Intervention, Etat) values";
             for(int i=0; i < listEmp.Count; i++)
             {
