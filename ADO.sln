@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exo3CodeFirst", "Exo3CodeFi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPAdo.Interface", "TPAdo.Interface\TPAdo.Interface.csproj", "{21A9CD2D-C3FD-4134-9C97-16D458700381}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPAdo.InterfaceV2", "TPAdo.InterfaceV2\TPAdo.InterfaceV2.csproj", "{AB7CAAD4-FC23-4632-9B0F-60B36DEDF48F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{21A9CD2D-C3FD-4134-9C97-16D458700381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A9CD2D-C3FD-4134-9C97-16D458700381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21A9CD2D-C3FD-4134-9C97-16D458700381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7CAAD4-FC23-4632-9B0F-60B36DEDF48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7CAAD4-FC23-4632-9B0F-60B36DEDF48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7CAAD4-FC23-4632-9B0F-60B36DEDF48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7CAAD4-FC23-4632-9B0F-60B36DEDF48F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
