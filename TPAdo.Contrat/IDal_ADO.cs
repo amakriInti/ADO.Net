@@ -13,6 +13,6 @@ namespace TPAdo.Contrat
         Guid NouvelHotel(string nom, Guid gouv, Guid rec);
         Guid NouvelleChambre(string nom, Guid hotel);
         Guid NouvelleIntervention(Guid hotel, List<Guid> listEmp, List<Guid> listCh);
-        Guid NouvelUtilisateur(string nom, int statut);
+        Guid NouvelUtilisateur(string nom, byte statut);
     }
 }

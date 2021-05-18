@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d3326b6dd822480c9b888a8dc9cbc5bb" Name="Diagram1">
+        <EntityTypeShape EntityType="MakfiBDModel.Chambre" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.ChambreGroupeChambre" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.Employe" Width="1.5" PointX="8.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.Etat" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.GroupeChambre" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.Hotel" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.HotelEmploye" Width="1.5" PointX="8.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.Intervention" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.InterventionDetail" Width="1.5" PointX="10.5" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MakfiBDModel.Utilisateur" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="MakfiBDModel.FK_Chambre_Etat" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_Chambre_Hotel" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_ChambreGroupeChambre_Chambre" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_InterventionDetail_Chambre" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_ChambreGroupeChambre_GroupeChambre" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_Employe_Etat" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_HotelEmploye_Employe" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_InterventionDetail_Employe" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_InterventionDetail_Etat" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_GroupeChambre_Hotel" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_Hotel_Utilisateur" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_Hotel_Utilisateur2" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_HotelEmploye_Hotel" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_Intervention_Hotel" ManuallyRouted="false" />
+        <AssociationConnector Association="MakfiBDModel.FK_InterventionDetail_Intervention" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

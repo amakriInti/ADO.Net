@@ -1,0 +1,889 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MakfiBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chambre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Etat" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="Hotel" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChambreGroupeChambre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Chambre" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GroupeChambre" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Etat" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="Vitesse" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Etat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Libelle" Type="nvarchar(max)" />
+          <Property Name="Icone" Type="nvarchar(max)" />
+          <Property Name="Couleur" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Entite" Type="tinyint" Nullable="false" />
+          <Property Name="EtatEtat" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupeChambre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="Hotel" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Reception" Type="uniqueidentifier" />
+          <Property Name="Gouvernante" Type="uniqueidentifier" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="IdWeb" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="HotelEmploye">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Hotel" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Employe" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Intervention">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="Date1" Type="datetime" Nullable="false" />
+          <Property Name="Libelle" Type="nvarchar(max)" />
+          <Property Name="Model" Type="bit" Nullable="false" />
+          <Property Name="Hotel" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Etat" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InterventionDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeAffecte" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChambreAffectee" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Commentaire" Type="nvarchar(max)" />
+          <Property Name="Intervention" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Etat" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Identifiant" Type="int" />
+          <Property Name="CodePin" Type="nvarchar(max)" />
+          <Property Name="Statut" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Chambre_Etat">
+          <End Role="Etat" Type="Self.Etat" Multiplicity="1" />
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chambre">
+              <PropertyRef Name="Etat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chambre_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chambre">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChambreGroupeChambre_Chambre">
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="1" />
+          <End Role="ChambreGroupeChambre" Type="Self.ChambreGroupeChambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chambre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChambreGroupeChambre">
+              <PropertyRef Name="Chambre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChambreGroupeChambre_GroupeChambre">
+          <End Role="GroupeChambre" Type="Self.GroupeChambre" Multiplicity="0..1" />
+          <End Role="ChambreGroupeChambre" Type="Self.ChambreGroupeChambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupeChambre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChambreGroupeChambre">
+              <PropertyRef Name="GroupeChambre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employe_Etat">
+          <End Role="Etat" Type="Self.Etat" Multiplicity="1" />
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="Etat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupeChambre_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="GroupeChambre" Type="Self.GroupeChambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupeChambre">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hotel">
+              <PropertyRef Name="Reception" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_Utilisateur2">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hotel">
+              <PropertyRef Name="Gouvernante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelEmploye_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="HotelEmploye" Type="Self.HotelEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelEmploye">
+              <PropertyRef Name="Employe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelEmploye_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="HotelEmploye" Type="Self.HotelEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelEmploye">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intervention_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="Intervention" Type="Self.Intervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Intervention">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Chambre">
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chambre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="ChambreAffectee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="EmployeAffecte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Etat">
+          <End Role="Etat" Type="Self.Etat" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="Etat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Intervention">
+          <End Role="Intervention" Type="Self.Intervention" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Intervention">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="Intervention" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MakfiBDModelStoreContainer">
+          <EntitySet Name="Chambre" EntityType="Self.Chambre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChambreGroupeChambre" EntityType="Self.ChambreGroupeChambre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employe" EntityType="Self.Employe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Etat" EntityType="Self.Etat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupeChambre" EntityType="Self.GroupeChambre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelEmploye" EntityType="Self.HotelEmploye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Intervention" EntityType="Self.Intervention" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InterventionDetail" EntityType="Self.InterventionDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Chambre_Etat" Association="Self.FK_Chambre_Etat">
+            <End Role="Etat" EntitySet="Etat" />
+            <End Role="Chambre" EntitySet="Chambre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chambre_Hotel" Association="Self.FK_Chambre_Hotel">
+            <End Role="Hotel" EntitySet="Hotel" />
+            <End Role="Chambre" EntitySet="Chambre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChambreGroupeChambre_Chambre" Association="Self.FK_ChambreGroupeChambre_Chambre">
+            <End Role="Chambre" EntitySet="Chambre" />
+            <End Role="ChambreGroupeChambre" EntitySet="ChambreGroupeChambre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChambreGroupeChambre_GroupeChambre" Association="Self.FK_ChambreGroupeChambre_GroupeChambre">
+            <End Role="GroupeChambre" EntitySet="GroupeChambre" />
+            <End Role="ChambreGroupeChambre" EntitySet="ChambreGroupeChambre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employe_Etat" Association="Self.FK_Employe_Etat">
+            <End Role="Etat" EntitySet="Etat" />
+            <End Role="Employe" EntitySet="Employe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupeChambre_Hotel" Association="Self.FK_GroupeChambre_Hotel">
+            <End Role="Hotel" EntitySet="Hotel" />
+            <End Role="GroupeChambre" EntitySet="GroupeChambre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_Utilisateur" Association="Self.FK_Hotel_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Hotel" EntitySet="Hotel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_Utilisateur2" Association="Self.FK_Hotel_Utilisateur2">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Hotel" EntitySet="Hotel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelEmploye_Employe" Association="Self.FK_HotelEmploye_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="HotelEmploye" EntitySet="HotelEmploye" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelEmploye_Hotel" Association="Self.FK_HotelEmploye_Hotel">
+            <End Role="Hotel" EntitySet="Hotel" />
+            <End Role="HotelEmploye" EntitySet="HotelEmploye" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intervention_Hotel" Association="Self.FK_Intervention_Hotel">
+            <End Role="Hotel" EntitySet="Hotel" />
+            <End Role="Intervention" EntitySet="Intervention" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Chambre" Association="Self.FK_InterventionDetail_Chambre">
+            <End Role="Chambre" EntitySet="Chambre" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Employe" Association="Self.FK_InterventionDetail_Employe">
+            <End Role="Employe" EntitySet="Employe" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Etat" Association="Self.FK_InterventionDetail_Etat">
+            <End Role="Etat" EntitySet="Etat" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Intervention" Association="Self.FK_InterventionDetail_Intervention">
+            <End Role="Intervention" EntitySet="Intervention" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MakfiBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Chambre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Etat" Type="Guid" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hotel" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Etat1" Relationship="Self.FK_Chambre_Etat" FromRole="Chambre" ToRole="Etat" />
+          <NavigationProperty Name="Hotel1" Relationship="Self.FK_Chambre_Hotel" FromRole="Chambre" ToRole="Hotel" />
+          <NavigationProperty Name="ChambreGroupeChambres" Relationship="Self.FK_ChambreGroupeChambre_Chambre" FromRole="Chambre" ToRole="ChambreGroupeChambre" />
+          <NavigationProperty Name="InterventionDetails" Relationship="Self.FK_InterventionDetail_Chambre" FromRole="Chambre" ToRole="InterventionDetail" />
+        </EntityType>
+        <EntityType Name="ChambreGroupeChambre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Chambre" Type="Guid" Nullable="false" />
+          <Property Name="GroupeChambre" Type="Guid" />
+          <NavigationProperty Name="Chambre1" Relationship="Self.FK_ChambreGroupeChambre_Chambre" FromRole="ChambreGroupeChambre" ToRole="Chambre" />
+          <NavigationProperty Name="GroupeChambre1" Relationship="Self.FK_ChambreGroupeChambre_GroupeChambre" FromRole="ChambreGroupeChambre" ToRole="GroupeChambre" />
+        </EntityType>
+        <EntityType Name="Employe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Etat" Type="Guid" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vitesse" Type="Byte" />
+          <NavigationProperty Name="Etat1" Relationship="Self.FK_Employe_Etat" FromRole="Employe" ToRole="Etat" />
+          <NavigationProperty Name="HotelEmployes" Relationship="Self.FK_HotelEmploye_Employe" FromRole="Employe" ToRole="HotelEmploye" />
+          <NavigationProperty Name="InterventionDetails" Relationship="Self.FK_InterventionDetail_Employe" FromRole="Employe" ToRole="InterventionDetail" />
+        </EntityType>
+        <EntityType Name="Etat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Libelle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Icone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Couleur" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Entite" Type="Byte" Nullable="false" />
+          <Property Name="EtatEtat" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Chambres" Relationship="Self.FK_Chambre_Etat" FromRole="Etat" ToRole="Chambre" />
+          <NavigationProperty Name="Employes" Relationship="Self.FK_Employe_Etat" FromRole="Etat" ToRole="Employe" />
+          <NavigationProperty Name="InterventionDetails" Relationship="Self.FK_InterventionDetail_Etat" FromRole="Etat" ToRole="InterventionDetail" />
+        </EntityType>
+        <EntityType Name="GroupeChambre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hotel" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ChambreGroupeChambres" Relationship="Self.FK_ChambreGroupeChambre_GroupeChambre" FromRole="GroupeChambre" ToRole="ChambreGroupeChambre" />
+          <NavigationProperty Name="Hotel1" Relationship="Self.FK_GroupeChambre_Hotel" FromRole="GroupeChambre" ToRole="Hotel" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Reception" Type="Guid" />
+          <Property Name="Gouvernante" Type="Guid" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdWeb" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chambres" Relationship="Self.FK_Chambre_Hotel" FromRole="Hotel" ToRole="Chambre" />
+          <NavigationProperty Name="GroupeChambres" Relationship="Self.FK_GroupeChambre_Hotel" FromRole="Hotel" ToRole="GroupeChambre" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Hotel_Utilisateur" FromRole="Hotel" ToRole="Utilisateur" />
+          <NavigationProperty Name="Utilisateur1" Relationship="Self.FK_Hotel_Utilisateur2" FromRole="Hotel" ToRole="Utilisateur" />
+          <NavigationProperty Name="HotelEmployes" Relationship="Self.FK_HotelEmploye_Hotel" FromRole="Hotel" ToRole="HotelEmploye" />
+          <NavigationProperty Name="Interventions" Relationship="Self.FK_Intervention_Hotel" FromRole="Hotel" ToRole="Intervention" />
+        </EntityType>
+        <EntityType Name="HotelEmploye">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Hotel" Type="Guid" Nullable="false" />
+          <Property Name="Employe" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Employe1" Relationship="Self.FK_HotelEmploye_Employe" FromRole="HotelEmploye" ToRole="Employe" />
+          <NavigationProperty Name="Hotel1" Relationship="Self.FK_HotelEmploye_Hotel" FromRole="HotelEmploye" ToRole="Hotel" />
+        </EntityType>
+        <EntityType Name="Intervention">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date1" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Libelle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Boolean" Nullable="false" />
+          <Property Name="Hotel" Type="Guid" Nullable="false" />
+          <Property Name="Etat" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Hotel1" Relationship="Self.FK_Intervention_Hotel" FromRole="Intervention" ToRole="Hotel" />
+          <NavigationProperty Name="InterventionDetails" Relationship="Self.FK_InterventionDetail_Intervention" FromRole="Intervention" ToRole="InterventionDetail" />
+        </EntityType>
+        <EntityType Name="InterventionDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EmployeAffecte" Type="Guid" Nullable="false" />
+          <Property Name="ChambreAffectee" Type="Guid" Nullable="false" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Intervention" Type="Guid" Nullable="false" />
+          <Property Name="Etat" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Chambre" Relationship="Self.FK_InterventionDetail_Chambre" FromRole="InterventionDetail" ToRole="Chambre" />
+          <NavigationProperty Name="Employe" Relationship="Self.FK_InterventionDetail_Employe" FromRole="InterventionDetail" ToRole="Employe" />
+          <NavigationProperty Name="Etat1" Relationship="Self.FK_InterventionDetail_Etat" FromRole="InterventionDetail" ToRole="Etat" />
+          <NavigationProperty Name="Intervention1" Relationship="Self.FK_InterventionDetail_Intervention" FromRole="InterventionDetail" ToRole="Intervention" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Identifiant" Type="Int32" />
+          <Property Name="CodePin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Statut" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Hotels" Relationship="Self.FK_Hotel_Utilisateur" FromRole="Utilisateur" ToRole="Hotel" />
+          <NavigationProperty Name="Hotels1" Relationship="Self.FK_Hotel_Utilisateur2" FromRole="Utilisateur" ToRole="Hotel" />
+        </EntityType>
+        <Association Name="FK_Chambre_Etat">
+          <End Role="Etat" Type="Self.Etat" Multiplicity="1" />
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chambre">
+              <PropertyRef Name="Etat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chambre_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chambre">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChambreGroupeChambre_Chambre">
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="1" />
+          <End Role="ChambreGroupeChambre" Type="Self.ChambreGroupeChambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chambre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChambreGroupeChambre">
+              <PropertyRef Name="Chambre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Chambre">
+          <End Role="Chambre" Type="Self.Chambre" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chambre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="ChambreAffectee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChambreGroupeChambre_GroupeChambre">
+          <End Role="GroupeChambre" Type="Self.GroupeChambre" Multiplicity="0..1" />
+          <End Role="ChambreGroupeChambre" Type="Self.ChambreGroupeChambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupeChambre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChambreGroupeChambre">
+              <PropertyRef Name="GroupeChambre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employe_Etat">
+          <End Role="Etat" Type="Self.Etat" Multiplicity="1" />
+          <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employe">
+              <PropertyRef Name="Etat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelEmploye_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="HotelEmploye" Type="Self.HotelEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelEmploye">
+              <PropertyRef Name="Employe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Employe">
+          <End Role="Employe" Type="Self.Employe" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="EmployeAffecte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Etat">
+          <End Role="Etat" Type="Self.Etat" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="Etat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupeChambre_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="GroupeChambre" Type="Self.GroupeChambre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GroupeChambre">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hotel">
+              <PropertyRef Name="Reception" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_Utilisateur2">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hotel">
+              <PropertyRef Name="Gouvernante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelEmploye_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="HotelEmploye" Type="Self.HotelEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelEmploye">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Intervention_Hotel">
+          <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+          <End Role="Intervention" Type="Self.Intervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Intervention">
+              <PropertyRef Name="Hotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterventionDetail_Intervention">
+          <End Role="Intervention" Type="Self.Intervention" Multiplicity="1" />
+          <End Role="InterventionDetail" Type="Self.InterventionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Intervention">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterventionDetail">
+              <PropertyRef Name="Intervention" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MakfiContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Chambres" EntityType="Self.Chambre" />
+          <EntitySet Name="ChambreGroupeChambres" EntityType="Self.ChambreGroupeChambre" />
+          <EntitySet Name="Employes" EntityType="Self.Employe" />
+          <EntitySet Name="Etats" EntityType="Self.Etat" />
+          <EntitySet Name="GroupeChambres" EntityType="Self.GroupeChambre" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
+          <EntitySet Name="HotelEmployes" EntityType="Self.HotelEmploye" />
+          <EntitySet Name="Interventions" EntityType="Self.Intervention" />
+          <EntitySet Name="InterventionDetails" EntityType="Self.InterventionDetail" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <AssociationSet Name="FK_Chambre_Etat" Association="Self.FK_Chambre_Etat">
+            <End Role="Etat" EntitySet="Etats" />
+            <End Role="Chambre" EntitySet="Chambres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chambre_Hotel" Association="Self.FK_Chambre_Hotel">
+            <End Role="Hotel" EntitySet="Hotels" />
+            <End Role="Chambre" EntitySet="Chambres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChambreGroupeChambre_Chambre" Association="Self.FK_ChambreGroupeChambre_Chambre">
+            <End Role="Chambre" EntitySet="Chambres" />
+            <End Role="ChambreGroupeChambre" EntitySet="ChambreGroupeChambres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Chambre" Association="Self.FK_InterventionDetail_Chambre">
+            <End Role="Chambre" EntitySet="Chambres" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChambreGroupeChambre_GroupeChambre" Association="Self.FK_ChambreGroupeChambre_GroupeChambre">
+            <End Role="GroupeChambre" EntitySet="GroupeChambres" />
+            <End Role="ChambreGroupeChambre" EntitySet="ChambreGroupeChambres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employe_Etat" Association="Self.FK_Employe_Etat">
+            <End Role="Etat" EntitySet="Etats" />
+            <End Role="Employe" EntitySet="Employes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelEmploye_Employe" Association="Self.FK_HotelEmploye_Employe">
+            <End Role="Employe" EntitySet="Employes" />
+            <End Role="HotelEmploye" EntitySet="HotelEmployes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Employe" Association="Self.FK_InterventionDetail_Employe">
+            <End Role="Employe" EntitySet="Employes" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Etat" Association="Self.FK_InterventionDetail_Etat">
+            <End Role="Etat" EntitySet="Etats" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupeChambre_Hotel" Association="Self.FK_GroupeChambre_Hotel">
+            <End Role="Hotel" EntitySet="Hotels" />
+            <End Role="GroupeChambre" EntitySet="GroupeChambres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_Utilisateur" Association="Self.FK_Hotel_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Hotel" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_Utilisateur2" Association="Self.FK_Hotel_Utilisateur2">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="Hotel" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelEmploye_Hotel" Association="Self.FK_HotelEmploye_Hotel">
+            <End Role="Hotel" EntitySet="Hotels" />
+            <End Role="HotelEmploye" EntitySet="HotelEmployes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Intervention_Hotel" Association="Self.FK_Intervention_Hotel">
+            <End Role="Hotel" EntitySet="Hotels" />
+            <End Role="Intervention" EntitySet="Interventions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterventionDetail_Intervention" Association="Self.FK_InterventionDetail_Intervention">
+            <End Role="Intervention" EntitySet="Interventions" />
+            <End Role="InterventionDetail" EntitySet="InterventionDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MakfiBDModelStoreContainer" CdmEntityContainer="MakfiContext">
+          <EntitySetMapping Name="Chambres">
+            <EntityTypeMapping TypeName="MakfiBDModel.Chambre">
+              <MappingFragment StoreEntitySet="Chambre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="Hotel" ColumnName="Hotel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChambreGroupeChambres">
+            <EntityTypeMapping TypeName="MakfiBDModel.ChambreGroupeChambre">
+              <MappingFragment StoreEntitySet="ChambreGroupeChambre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Chambre" ColumnName="Chambre" />
+                <ScalarProperty Name="GroupeChambre" ColumnName="GroupeChambre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employes">
+            <EntityTypeMapping TypeName="MakfiBDModel.Employe">
+              <MappingFragment StoreEntitySet="Employe">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="Vitesse" ColumnName="Vitesse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Etats">
+            <EntityTypeMapping TypeName="MakfiBDModel.Etat">
+              <MappingFragment StoreEntitySet="Etat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+                <ScalarProperty Name="Icone" ColumnName="Icone" />
+                <ScalarProperty Name="Couleur" ColumnName="Couleur" />
+                <ScalarProperty Name="Entite" ColumnName="Entite" />
+                <ScalarProperty Name="EtatEtat" ColumnName="EtatEtat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupeChambres">
+            <EntityTypeMapping TypeName="MakfiBDModel.GroupeChambre">
+              <MappingFragment StoreEntitySet="GroupeChambre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="Hotel" ColumnName="Hotel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="MakfiBDModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Reception" ColumnName="Reception" />
+                <ScalarProperty Name="Gouvernante" ColumnName="Gouvernante" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="IdWeb" ColumnName="IdWeb" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelEmployes">
+            <EntityTypeMapping TypeName="MakfiBDModel.HotelEmploye">
+              <MappingFragment StoreEntitySet="HotelEmploye">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Hotel" ColumnName="Hotel" />
+                <ScalarProperty Name="Employe" ColumnName="Employe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Interventions">
+            <EntityTypeMapping TypeName="MakfiBDModel.Intervention">
+              <MappingFragment StoreEntitySet="Intervention">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="Date1" ColumnName="Date1" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Hotel" ColumnName="Hotel" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InterventionDetails">
+            <EntityTypeMapping TypeName="MakfiBDModel.InterventionDetail">
+              <MappingFragment StoreEntitySet="InterventionDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeAffecte" ColumnName="EmployeAffecte" />
+                <ScalarProperty Name="ChambreAffectee" ColumnName="ChambreAffectee" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+                <ScalarProperty Name="Intervention" ColumnName="Intervention" />
+                <ScalarProperty Name="Etat" ColumnName="Etat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="MakfiBDModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateur">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Identifiant" ColumnName="Identifiant" />
+                <ScalarProperty Name="CodePin" ColumnName="CodePin" />
+                <ScalarProperty Name="Statut" ColumnName="Statut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

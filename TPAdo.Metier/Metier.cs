@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TpAdo.Donnees;
+using TPAdo.DonneesV2;
 
 namespace TPAdo.Metier
 {
     public class Metier_Tp
     {
-        private Dal_ADO Dal = new Dal_ADO();
+        private Dal_ADO Dal = new Dal_ADO( );
         public Guid NouvelUtilisateur(string nom, int statut)
         {
-            return Dal.NouvelUtilisateur(nom, statut);
+            return Dal.NouvelUtilisateur(nom, (byte) statut);
         }
 
         public Guid NouvelHotel(string nom, Guid gouv, Guid rec)

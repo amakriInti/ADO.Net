@@ -35,7 +35,7 @@ namespace TpAdo.Donnees
             Cmd.CommandType = CommandType.Text;
         }
 
-        public Guid NouvelUtilisateur(string nom, int statut)
+        public Guid NouvelUtilisateur(string nom, byte statut)
         {
             var id = Guid.NewGuid();
             Cmd.CommandText = $"Insert into Utilisateur (Id, Nom, CodePin, Statut) values('{id}', '{nom}', '1111', {statut})";
