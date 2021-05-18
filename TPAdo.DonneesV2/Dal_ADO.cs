@@ -101,7 +101,6 @@ namespace TPAdo.DonneesV2
             Contexte.Utilisateurs.Add(utilisateur);
 
             Contexte.SaveChanges();
-
             return id;
         }
     }

@@ -1,0 +1,27 @@
+Exercice 1 :
+ - ADO.Net
+ - AdventureWorks
+ - Nombre de produits par cat
+	bikes 	   345
+	Components 160
+	...
+
+Exercice 2 :
+ - EF
+ - AdventureWorks
+ - Liste des personnes par ville
+	Lyon  	  
+	  p1
+	  p2
+	Marseille 
+	  p3
+	  p4
+	Paris   
+  
+Exercice 3 :
+  - Construire une BD avec 2 tables Personne Ville
+  - C# : Remplir les 2 tables avec AdventureWorks
+
+Exercice 4 :
+ - Architecture 2Tiers (Client (interface) / Serveur)
+ - Mettre en majuscule
