@@ -55,5 +55,8 @@
       <Name>TPAdo.Metier</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
